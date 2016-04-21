@@ -1,0 +1,18 @@
+{
+  "name": "tinymce-plugin-youtube",
+  "homepage": "https://github.com/Branch2/tinymce-plugin-youtube",
+  "authors": [
+    "Tanner Engbretson <tanner@engbretson.us>"
+  ],
+  "description": "A plugin for embedding YouTube videos into TinyMCE",
+  "main": "dist/plugin.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
