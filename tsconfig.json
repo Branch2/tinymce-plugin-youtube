@@ -1,7 +1,8 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "target": "es5",
-    "out": "dist/plugin.js",
+    "outDir": "dist",
     "watch": true
   }
 }

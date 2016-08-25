@@ -37,7 +37,7 @@ tinymce.PluginManager.add('youtube', editor => {
     S5/gv5z2/ExP62AJ44xX9agn8lgpD4JhKEK/S/XXJ6XFr78szZ81OAAQDzir8hWAa52wAAAABJRU
     5ErkJggg==
   `.replace(/\s/g, '');
-  
+
   // Base64 encoded placeholder image
   const YT_IMAGE = `
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwUAAAHhCAYAAAA/LxLEAAAAGXRFWH
@@ -196,7 +196,7 @@ tinymce.PluginManager.add('youtube', editor => {
     AAoQAAABAKAAAAoQAAABAKAAAAoQAAABAKAAAAoQAAABAKAAAAoQAAABAKAAAAoQAAABAKAAAAoQ
     AAABAKAAAAoQAAABAKAAAAoQAAABAKAACAwv1/AQYAVHe8zmCdvFAAAAAASUVORK5CYII=
   `.replace(/\s/g, '');
-  
+
   const placeholder_style = `
     background: url('${YT_IMAGE}');
     height: 100%;
@@ -212,9 +212,9 @@ tinymce.PluginManager.add('youtube', editor => {
     if (match && match[2] && match[2].length === 11) return match[2];
     else throw new Error('Provided url not a youtube video');
   }
-  
+
   function createEmbedElement(id): HTMLIFrameElement {
-    const url = 'https://www.youtube.com/embed/' + id + '?rel=0&hd=1';
+    const url = `https://www.youtube.com/embed/${id}?rel=0&hd=1&showinfo=0`;
     const el = document.createElement('iframe');
     el.setAttribute('class', 'embed-responsive-item');
     el.setAttribute('src', url);
@@ -229,28 +229,28 @@ tinymce.PluginManager.add('youtube', editor => {
     tooltip: 'YouTube',
     onclick() {
       const { TextBox, Container } = tinymce.ui;
-      
+
       const link_input = new TextBox({
         label: 'YouTube Link:',
         tooltip: 'YouTube Video URL',
         name: 'yt_url',
         placeholder: 'http://www.youtube.com/watch?v=XXXXXXXXXXX'
       });
-      
+
       const preview = new Container({
         layout: 'fit',
         minHeight: 240,
         minWidth: 320,
         html: placeholder
       });
-      
+
       const popup = editor.windowManager.open({
         width: 480,
         height: 320,
         title: 'Insert a YouTube Video',
         body: [ link_input, preview ]
       });
-      
+
       link_input.on('input', event => {
         const { value } = event.target;
         try {
@@ -259,9 +259,9 @@ tinymce.PluginManager.add('youtube', editor => {
           preview.innerHtml(el.outerHTML);
         } catch (error) {
           preview.innerHtml(placeholder);
-        }        
+        }
       });
-      
+
       popup.on('submit', event => {
         try {
           const { yt_url } = event.data;
