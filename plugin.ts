@@ -207,19 +207,33 @@ tinymce.PluginManager.add('youtube', editor => {
 
   const placeholder = `<div style="${placeholder_style}"></div>`;
 
+  const randomId = () => [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+    .map(() => (0 | (Math.random() * 36)).toString(36))
+    .join('');
+
+  const generateLoadHandler = id => `
+    var iframe = document.getElementById('${id}');
+    var style = iframe.contentDocument.createElement('style');
+    style.innerHtml = '.ytp-watermark.yt-uix-sessionlink { display: none; }';
+    iframe.contentDocument.body.appendChild(style);
+  `;
+
   function youtubeId(url: string): string {
     const match = url.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
     if (match && match[2] && match[2].length === 11) return match[2];
     else throw new Error('Provided url not a youtube video');
   }
 
-  function createEmbedElement(id): HTMLIFrameElement {
-    const url = `https://www.youtube.com/embed/${id}?rel=0&hd=1&showinfo=0`;
+  function createEmbedElement(yt_id): HTMLIFrameElement {
+    const url = `https://www.youtube.com/embed/${yt_id}?rel=0&hd=1&showinfo=0`;
     const el = document.createElement('iframe');
+    const id = randomId();
     el.setAttribute('class', 'embed-responsive-item');
     el.setAttribute('src', url);
     el.setAttribute('frameborder', '0');
     el.setAttribute('allowfullscreen', '');
+    el.setAttribute('id', id);
+    el.setAttribute('onload', generateLoadHandler(id));
     return el;
   }
 
