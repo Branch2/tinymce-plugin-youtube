@@ -215,15 +215,13 @@ tinymce.PluginManager.add('youtube', editor => {
 
   function createEmbedElement(id): HTMLSpanElement {
     const url = `https://www.youtube.com/embed/${id}?rel=0&hd=1&showinfo=0`;
-    const span = document.createElement('span');
     const el = document.createElement('iframe');
-    span.setAttribute('style', 'display: flex;');
-    span.appendChild(el);
+    el.setAttribute('style', 'width: 100%;');
     el.setAttribute('class', 'embed-responsive-item');
     el.setAttribute('src', url);
     el.setAttribute('frameborder', '0');
     el.setAttribute('allowfullscreen', '');
-    return span;
+    return el;
   }
 
   editor.addButton('youtube', {
