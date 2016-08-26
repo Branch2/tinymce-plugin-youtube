@@ -12,12 +12,15 @@ tinymce.PluginManager.add('youtube', function (editor) {
     }
     function createEmbedElement(id) {
         var url = "https://www.youtube.com/embed/" + id + "?rel=0&hd=1&showinfo=0";
+        var span = document.createElement('span');
         var el = document.createElement('iframe');
+        span.setAttribute('style', 'display: flex;');
+        span.appendChild(el);
         el.setAttribute('class', 'embed-responsive-item');
         el.setAttribute('src', url);
         el.setAttribute('frameborder', '0');
         el.setAttribute('allowfullscreen', '');
-        return el;
+        return span;
     }
     editor.addButton('youtube', {
         icon: true,

@@ -213,14 +213,17 @@ tinymce.PluginManager.add('youtube', editor => {
     else throw new Error('Provided url not a youtube video');
   }
 
-  function createEmbedElement(id): HTMLIFrameElement {
+  function createEmbedElement(id): HTMLSpanElement {
     const url = `https://www.youtube.com/embed/${id}?rel=0&hd=1&showinfo=0`;
+    const span = document.createElement('span');
     const el = document.createElement('iframe');
+    span.setAttribute('style', 'display: flex;');
+    span.appendChild(el);
     el.setAttribute('class', 'embed-responsive-item');
     el.setAttribute('src', url);
     el.setAttribute('frameborder', '0');
     el.setAttribute('allowfullscreen', '');
-    return el;
+    return span;
   }
 
   editor.addButton('youtube', {
